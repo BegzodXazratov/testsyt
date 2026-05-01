@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TargetPro — Aniq Targeting Xizmatlari</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:      #0d0f0e;
+  --ink-soft: #1a1d1b;
+  --ink-mid:  #222622;
+  --gold:     #c8a96e;
+  --gold-lt:  #e8d5a8;
+  --gold-dk:  #a07840;
+  --sage:     #3d5a47;
+  --cream:    #f2ede4;
+  --mist:     #8a9488;
+  --r:        16px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--ink);color:var(--cream);overflow-x:hidden}
+
+/* GRAIN */
+body::after{content:'';position:fixed;inset:0;z-index:998;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  opacity:.3}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.3rem 5rem;background:rgba(13,15,14,.88);backdrop-filter:blur(20px);border-bottom:1px solid rgba(200,169,110,.12)}
+.logo{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;color:var(--cream)}
+.logo span{color:var(--gold)}
+nav ul{list-style:none;display:flex;gap:2.5rem;align-items:center}
+nav ul a{text-decoration:none;color:var(--mist);font-size:.88rem;font-weight:500;transition:color .2s}
+nav ul a:hover{color:var(--gold)}
+.nav-cta{background:var(--gold)!important;color:var(--ink)!important;padding:.52rem 1.4rem;border-radius:50px;font-weight:700!important;transition:opacity .2s!important}
+.nav-cta:hover{opacity:.85!important}
+
+/* ── HERO ── */
+#hero{min-height:100vh;display:flex;align-items:center;padding:9rem 5rem 5rem;position:relative;overflow:hidden;
+  background:radial-gradient(ellipse 65% 55% at 85% 50%,rgba(61,90,71,.2) 0%,transparent 70%),radial-gradient(ellipse 45% 40% at 5% 85%,rgba(200,169,110,.07) 0%,transparent 60%),var(--ink)}
+
+.hdeco{position:absolute;right:-60px;top:50%;transform:translateY(-50%);width:580px;height:580px;border:1px solid rgba(200,169,110,.08);border-radius:50%;pointer-events:none}
+.hdeco::before{content:'';position:absolute;inset:50px;border:1px solid rgba(200,169,110,.06);border-radius:50%}
+.hdeco::after{content:'';position:absolute;inset:110px;border:1px solid rgba(200,169,110,.04);border-radius:50%}
+
+.hi{max-width:1100px;margin:0 auto;width:100%;position:relative}
+
+.eyebrow{display:inline-flex;align-items:center;gap:.6rem;font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:1.8rem;opacity:0;animation:up .7s .1s ease forwards}
+.eyebrow::before{content:'';display:inline-block;width:26px;height:1px;background:var(--gold)}
+
+h1{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,5.5vw,5.2rem);font-weight:900;line-height:1.08;letter-spacing:-1px;max-width:740px;margin-bottom:1.8rem;opacity:0;animation:up .7s .2s ease forwards}
+h1 em{font-style:italic;background:linear-gradient(130deg,var(--gold),var(--gold-lt));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+
+.hsub{font-size:1.08rem;color:var(--mist);max-width:470px;line-height:1.85;margin-bottom:2.8rem;opacity:0;animation:up .7s .3s ease forwards}
+
+.hbtns{display:flex;gap:1rem;flex-wrap:wrap;opacity:0;animation:up .7s .4s ease forwards}
+.bg{display:inline-flex;align-items:center;gap:.5rem;background:linear-gradient(135deg,var(--gold),var(--gold-dk));color:var(--ink);font-weight:700;font-size:.95rem;padding:.9rem 2rem;border-radius:50px;text-decoration:none;border:none;cursor:pointer;box-shadow:0 8px 30px rgba(200,169,110,.28);transition:transform .25s,box-shadow .25s}
+.bg:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(200,169,110,.38)}
+.bgh{display:inline-flex;align-items:center;background:transparent;color:var(--cream);font-weight:600;font-size:.95rem;padding:.9rem 2rem;border-radius:50px;border:1px solid rgba(200,169,110,.25);text-decoration:none;cursor:pointer;transition:border-color .25s,background .25s}
+.bgh:hover{border-color:var(--gold);background:rgba(200,169,110,.06)}
+
+.hstats{display:flex;gap:3rem;margin-top:4.5rem;padding-top:2.5rem;border-top:1px solid rgba(200,169,110,.1);opacity:0;animation:up .7s .5s ease forwards}
+.snum{font-family:'Playfair Display',serif;font-size:2.3rem;font-weight:700;line-height:1}
+.snum span{color:var(--gold)}
+.slbl{font-size:.78rem;color:var(--mist);margin-top:.35rem;letter-spacing:.02em}
+
+@keyframes up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── SECTIONS ── */
+section{padding:7rem 5rem}
+.se{display:inline-flex;align-items:center;gap:.55rem;font-size:.7rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
+.se::before{content:'';display:inline-block;width:20px;height:1px;background:var(--gold)}
+.st{font-family:'Playfair Display',serif;font-size:clamp(1.9rem,3.2vw,2.8rem);font-weight:900;line-height:1.15;color:var(--cream);margin-bottom:1rem;letter-spacing:-.3px}
+.ss{font-size:.97rem;color:var(--mist);max-width:490px;line-height:1.85;margin-bottom:3.8rem}
+.sh{max-width:1100px;margin:0 auto}
+
+/* ── SERVICES ── */
+#services{background:radial-gradient(ellipse 55% 50% at 0 50%,rgba(61,90,71,.1) 0%,transparent 65%),var(--ink-soft)}
+.sg{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.sc{background:rgba(255,255,255,.025);border:1px solid rgba(200,169,110,.1);border-radius:var(--r);padding:2.2rem;position:relative;overflow:hidden;transition:transform .3s,border-color .3s,background .3s}
+.sc::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;transition:opacity .3s}
+.sc:hover::before{opacity:1}
+.sc:hover{transform:translateY(-6px);border-color:rgba(200,169,110,.28);background:rgba(200,169,110,.035)}
+.si{width:46px;height:46px;background:rgba(200,169,110,.09);border:1px solid rgba(200,169,110,.18);border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.25rem;margin-bottom:1.3rem}
+.sc h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--cream);margin-bottom:.65rem}
+.sc p{font-size:.88rem;color:var(--mist);line-height:1.8}
+
+/* ── PRICING ── */
+#pricing{background:radial-gradient(ellipse 70% 55% at 100% 0,rgba(200,169,110,.06) 0%,transparent 55%),var(--ink)}
+.pg{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;align-items:start}
+.pc{background:rgba(255,255,255,.025);border:1px solid rgba(200,169,110,.12);border-radius:20px;padding:2.5rem;position:relative;transition:border-color .3s,transform .3s}
+.pc:hover{border-color:rgba(200,169,110,.3);transform:translateY(-5px)}
+.pc.feat{background:linear-gradient(148deg,rgba(200,169,110,.13),rgba(200,169,110,.04));border-color:rgba(200,169,110,.38);transform:scale(1.03)}
+.pc.feat:hover{transform:scale(1.03) translateY(-5px)}
+.bpop{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--gold),var(--gold-dk));color:var(--ink);font-size:.66rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.28rem 1rem;border-radius:50px;white-space:nowrap}
+.pn{font-size:.72rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.9rem}
+.pp{font-family:'Playfair Display',serif;font-size:3rem;font-weight:900;color:var(--cream);line-height:1;margin-bottom:.3rem}
+.pp sup{font-size:1.2rem;vertical-align:top;margin-top:.55rem;display:inline-block}
+.pp sub{font-size:.85rem;font-weight:400;color:var(--mist)}
+.pd{font-size:.83rem;color:var(--mist);margin-bottom:1.8rem;line-height:1.6}
+.fl{list-style:none;margin-bottom:1.8rem}
+.fi{font-size:.86rem;color:#aab4a2;padding:.55rem 0;border-bottom:1px solid rgba(255,255,255,.05);display:flex;align-items:flex-start;gap:.65rem}
+.fi::before{content:'✓';color:var(--gold);font-weight:700;flex-shrink:0;margin-top:1px}
+.bp{width:100%;padding:.88rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.88rem;border-radius:12px;border:1px solid rgba(200,169,110,.3);background:transparent;color:var(--gold);cursor:pointer;transition:background .25s,color .25s,border-color .25s;letter-spacing:.02em}
+.bp:hover{background:var(--gold);color:var(--ink);border-color:var(--gold)}
+.pc.feat .bp{background:linear-gradient(135deg,var(--gold),var(--gold-dk));color:var(--ink);border-color:transparent;box-shadow:0 6px 24px rgba(200,169,110,.25)}
+.pc.feat .bp:hover{opacity:.88}
+
+/* ── REGISTER ── */
+#register{background:radial-gradient(ellipse 55% 65% at 0 100%,rgba(61,90,71,.12) 0%,transparent 60%),var(--ink-soft)}
+.rw{max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center}
+.tl{display:flex;flex-direction:column;gap:.9rem;margin-top:.5rem}
+.ti{display:flex;align-items:center;gap:1rem;font-size:.88rem;color:#9aaa92}
+.tic{width:38px;height:38px;flex-shrink:0;border:1px solid rgba(200,169,110,.18);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:.95rem;background:rgba(200,169,110,.06)}
+
+.fc{background:rgba(255,255,255,.028);border:1px solid rgba(200,169,110,.14);border-radius:24px;padding:3rem;backdrop-filter:blur(10px)}
+.ft{font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:700;color:var(--cream);margin-bottom:.4rem}
+.fsub{font-size:.83rem;color:var(--mist);margin-bottom:1.8rem}
+.fg{margin-bottom:1rem}
+label{display:block;font-size:.75rem;font-weight:600;color:var(--mist);margin-bottom:.4rem;letter-spacing:.05em;text-transform:uppercase}
+input,select,textarea{width:100%;padding:.82rem 1rem;background:rgba(255,255,255,.045);border:1px solid rgba(200,169,110,.13);border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-size:.9rem;color:var(--cream);outline:none;transition:border-color .2s,background .2s}
+input::placeholder,textarea::placeholder{color:rgba(138,148,136,.5)}
+input:focus,select:focus,textarea:focus{border-color:var(--gold);background:rgba(200,169,110,.06)}
+select option{background:var(--ink-mid);color:var(--cream)}
+textarea{resize:vertical;min-height:82px}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.bs{width:100%;padding:1rem;background:linear-gradient(135deg,var(--gold),var(--gold-dk));color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.95rem;border:none;border-radius:12px;cursor:pointer;margin-top:.7rem;letter-spacing:.02em;box-shadow:0 6px 26px rgba(200,169,110,.28);transition:transform .25s,box-shadow .25s}
+.bs:hover{transform:translateY(-2px);box-shadow:0 10px 34px rgba(200,169,110,.38)}
+.bs:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
+/* ── POPUP ── */
+.po{position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.78);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .35s ease}
+.po.show{opacity:1;pointer-events:all}
+.pb{background:var(--ink-mid);border:1px solid rgba(200,169,110,.28);border-radius:28px;padding:3.5rem 2.8rem;max-width:430px;width:92%;text-align:center;transform:translateY(28px) scale(.96);transition:transform .35s ease}
+.po.show .pb{transform:translateY(0) scale(1)}
+.pcheck{width:74px;height:74px;background:rgba(200,169,110,.1);border:1px solid rgba(200,169,110,.25);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.8rem;font-size:2rem;animation:none}
+.po.show .pcheck{animation:popIn .5s .2s ease both}
+@keyframes popIn{0%{transform:scale(.6)}60%{transform:scale(1.15)}100%{transform:scale(1)}}
+.ptitle{font-family:'Playfair Display',serif;font-size:1.75rem;font-weight:900;color:var(--cream);margin-bottom:.8rem}
+.ptxt{font-size:.93rem;color:var(--mist);line-height:1.85;margin-bottom:2rem}
+.pname{color:var(--gold-lt);font-weight:600}
+.pclose{background:linear-gradient(135deg,var(--gold),var(--gold-dk));color:var(--ink);font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:.9rem;padding:.85rem 2.4rem;border:none;border-radius:50px;cursor:pointer;box-shadow:0 6px 22px rgba(200,169,110,.28);transition:transform .2s,box-shadow .2s}
+.pclose:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(200,169,110,.38)}
+
+/* ── FOOTER ── */
+footer{background:var(--ink);border-top:1px solid rgba(200,169,110,.09);text-align:center;padding:2.5rem;font-size:.8rem;color:var(--mist);letter-spacing:.02em}
+footer strong{color:var(--gold)}
+
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .65s ease,transform .65s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:960px){
+  nav{padding:1rem 1.5rem}
+  nav ul{display:none}
+  section{padding:4.5rem 1.5rem}
+  #hero{padding:7rem 1.5rem 3.5rem}
+  .sg,.pg{grid-template-columns:1fr}
+  .pc.feat{transform:none}
+  .rw{grid-template-columns:1fr;gap:3rem}
+  .hstats{flex-wrap:wrap;gap:1.8rem}
+  .fr{grid-template-columns:1fr}
+  .hdeco{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- POPUP -->
+<div class="po" id="popup">
+  <div class="pb">
+    <div class="pcheck">🎯</div>
+    <div class="ptitle">Ariza qabul qilindi!</div>
+    <p class="ptxt">
+      Rahmat, <span class="pname" id="pname"></span>!<br>
+      Arizangiz muvaffaqiyatli yuborildi.<br>
+      Mutaxassisimiz <strong style="color:var(--gold-lt)">24 soat ichida</strong> siz bilan bog'lanadi va bepul konsultatsiya beradi.
+    </p>
+    <button class="pclose" onclick="closePopup()">Yaxshi, kutaman →</button>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Target<span>Pro</span></div>
+  <ul>
+    <li><a href="#services">Xizmatlar</a></li>
+    <li><a href="#pricing">Tariflar</a></li>
+    <li><a href="#register" class="nav-cta">Boshlash</a></li>
+  </ul>
+</nav>
+
+<!-- 1. HERO -->
+<section id="hero">
+  <div class="hdeco"></div>
+  <div class="hi">
+    <div class="eyebrow">Performance Marketing Agency</div>
+    <h1>Reklamangiz to'g'ri odamga, <em>to'g'ri vaqtda</em> yetib boradi.</h1>
+    <p class="hsub">Biz faqat klik emas — sotuvchi reklama yaratamiz. Facebook, Instagram va Google da aniq targeting orqali biznesingizni o'stiramiz.</p>
+    <div class="hbtns">
+      <a href="#register" class="bg">Bepul konsultatsiya →</a>
+      <a href="#services" class="bgh">Xizmatlarimiz</a>
+    </div>
+    <div class="hstats">
+      <div><div class="snum">500<span>+</span></div><div class="slbl">Muvaffaqiyatli kampaniya</div></div>
+      <div><div class="snum">3.8<span>×</span></div><div class="slbl">O'rtacha ROAS ko'rsatkich</div></div>
+      <div><div class="snum">98<span>%</span></div><div class="slbl">Mijoz qoniqish darajasi</div></div>
+      <div><div class="snum">5<span>yil</span></div><div class="slbl">Bozordagi tajriba</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. SERVICES -->
+<section id="services">
+  <div class="sh reveal">
+    <div class="se">Nimalar taklif qilinadi</div>
+    <h2 class="st">Sizning o'sishingiz uchun<br>barcha targeting yechimlari</h2>
+    <p class="ss">Strategiyadan analitikagacha — reklama jarayonining har bir bosqichini biz boshqaramiz, siz natijaga e'tibor qarating.</p>
+  </div>
+  <div class="sg">
+    <div class="sc reveal"><div class="si">🎯</div><h3>Facebook & Instagram Ads</h3><p>Demografik ma'lumotlar, qiziqishlar va xulq-atvor asosida aniq auditoriya yaratamiz. Har bir so'm ishlaydi.</p></div>
+    <div class="sc reveal"><div class="si">🔍</div><h3>Google Ads Kampaniyalari</h3><p>Search, Display va YouTube formatlarida faol xaridorlarni ushlaymiz. To'g'ri kalit so'zlar, yuqori konversiya.</p></div>
+    <div class="sc reveal"><div class="si">🔄</div><h3>Retargeting & Lookalike</h3><p>Saytingizga tashrif buyurganlarni qayta jalb qilamiz va ular kabi yangi mijozlar topamiz.</p></div>
+    <div class="sc reveal"><div class="si">📊</div><h3>Analitika & Optimizatsiya</h3><p>A/B testlar, konversiya tahlili va haftalik hisobotlar. Har bir qaror ma'lumotlarga asoslangan.</p></div>
+    <div class="sc reveal"><div class="si">✍️</div><h3>Kreativ va Kontent</h3><p>E'tibor tortuvchi banner, video skript va reklama matnlari — auditoriyangiz tilida gaplashamiz.</p></div>
+    <div class="sc reveal"><div class="si">⚙️</div><h3>Piksel & Tracking Sozlash</h3><p>Facebook Pixel, Google Tag Manager va konversiya kuzatuv tizimlarini professional darajada o'rnatish.</p></div>
+  </div>
+</section>
+
+<!-- 3. PRICING -->
+<section id="pricing">
+  <div class="sh reveal">
+    <div class="se">Tariflar</div>
+    <h2 class="st">Biznesingiz hajmiga<br>mos tarif tanlang</h2>
+    <p class="ss">Shaffof narxlar, yashirin to'lovlar yo'q. Istalgan vaqtda tarifni o'zgartirish mumkin.</p>
+  </div>
+  <div class="pg">
+    <div class="pc reveal">
+      <div class="pn">Starter</div>
+      <div class="pp"><sup>$</sup>199<sub>/oy</sub></div>
+      <p class="pd">Kichik biznes va yangi startaplar uchun ideal boshlang'ich</p>
+      <ul class="fl">
+        <li class="fi">1 ta platforma (Facebook yoki Google)</li>
+        <li class="fi">Oyda 3 ta reklama kampaniyasi</li>
+        <li class="fi">Auditoriya tahlili va sozlash</li>
+        <li class="fi">Oylik hisobot va tahlil</li>
+        <li class="fi">Email orqali qo'llab-quvvatlash</li>
+      </ul>
+      <button class="bp" onclick="selectPlan('Starter — $199/oy')">Boshlash</button>
+    </div>
+    <div class="pc feat reveal">
+      <div class="bpop">⭐ Eng mashhur</div>
+      <div class="pn">Growth</div>
+      <div class="pp"><sup>$</sup>449<sub>/oy</sub></div>
+      <p class="pd">O'sish bosqichidagi bizneslar uchun kuchli vosita</p>
+      <ul class="fl">
+        <li class="fi">Facebook, Instagram va Google (3 platforma)</li>
+        <li class="fi">Cheksiz reklama kampaniyalari</li>
+        <li class="fi">Retargeting & Lookalike auditoriya</li>
+        <li class="fi">A/B test va doimiy optimizatsiya</li>
+        <li class="fi">Haftalik hisobot va strategik tahlil</li>
+        <li class="fi">Dedikatlangan menejer</li>
+      </ul>
+      <button class="bp" onclick="selectPlan('Growth — $449/oy')">Boshlash</button>
+    </div>
+    <div class="pc reveal">
+      <div class="pn">Enterprise</div>
+      <div class="pp"><sup>$</sup>899<sub>/oy</sub></div>
+      <p class="pd">Yirik kompaniyalar uchun to'liq reklama ekosistema</p>
+      <ul class="fl">
+        <li class="fi">Barcha platformalar + TikTok Ads</li>
+        <li class="fi">Kreativ kontent ishlab chiqish</li>
+        <li class="fi">Pixel & konversiya to'liq sozlash</li>
+        <li class="fi">Kunlik monitoring va hisobot</li>
+        <li class="fi">7/24 qo'llab-quvvatlash</li>
+        <li class="fi">Oylik strategik konsultatsiya sessiyasi</li>
+      </ul>
+      <button class="bp" onclick="selectPlan('Enterprise — $899/oy')">Boshlash</button>
+    </div>
+  </div>
+</section>
+
+<!-- 4. REGISTER -->
+<section id="register">
+  <div class="rw">
+    <div class="reveal">
+      <div class="se">Ro'yxatdan o'tish</div>
+      <h2 class="st">Birinchi qadam<br>siz tomondan,<br>qolganini biz<br>qilamiz.</h2>
+      <p class="ss" style="margin-bottom:2rem">Formani to'ldiring — 24 soat ichida mutaxassisimiz siz bilan bog'lanadi va biznesingiz uchun moslashtirilgan strategiya taklif qiladi.</p>
+      <div class="tl">
+        <div class="ti"><div class="tic">🔒</div>Ma'lumotlaringiz xavfsiz va maxfiy saqlanadi</div>
+        <div class="ti"><div class="tic">⚡</div>24 soat ichida javob kafolatlanadi</div>
+        <div class="ti"><div class="tic">🎁</div>Birinchi konsultatsiya mutlaqo bepul</div>
+        <div class="ti"><div class="tic">📈</div>Natija bo'lmasa — to'lov qaytariladi</div>
+      </div>
+    </div>
+    <div class="fc reveal">
+      <div class="ft">Bepul konsultatsiya</div>
+      <p class="fsub">Hozir yuboring — ertaga biznesingiz o'sishni boshlaydi.</p>
+      <div class="fr">
+        <div class="fg"><label>Ismingiz *</label><input type="text" id="fname" placeholder="Abdulloh"></div>
+        <div class="fg"><label>Telefon *</label><input type="tel" id="phone" placeholder="+998 90 123 45 67"></div>
+      </div>
+      <div class="fg"><label>Email *</label><input type="email" id="email" placeholder="siz@example.com"></div>
+      <div class="fg"><label>Biznes nomi</label><input type="text" id="business" placeholder="Kompaniya yoki loyiha nomi"></div>
+      <div class="fg">
+        <label>Tarif rejasi</label>
+        <select id="tarif">
+          <option value="">— Tanlang —</option>
+          <option value="Starter — $199/oy">Starter — $199/oy</option>
+          <option value="Growth — $449/oy">Growth — $449/oy ⭐</option>
+          <option value="Enterprise — $899/oy">Enterprise — $899/oy</option>
+          <option value="Avval maslahatlashmoqchiman">Avval maslahatlashmoqchiman</option>
+        </select>
+      </div>
+      <div class="fg"><label>Qo'shimcha ma'lumot</label><textarea id="msg" placeholder="Biznesingiz, maqsadingiz yoki savollaringiz..."></textarea></div>
+      <button class="bs" id="submitBtn" onclick="submitForm()">Ariza yuborish →</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 <strong>TargetPro</strong> — Biznesingizni o'stirishda ishonchli hamkor. Barcha huquqlar himoyalangan.</p>
+</footer>
+
+<script>
+// Scroll reveal
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 90);
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
+
+// Tarif tanlash
+function selectPlan(plan) {
+  document.getElementById('tarif').value = plan;
+  document.getElementById('register').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Popup
+function showPopup(name) {
+  document.getElementById('pname').textContent = name;
+  const po = document.getElementById('popup');
+  po.classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function closePopup() {
+  document.getElementById('popup').classList.remove('show');
+  document.body.style.overflow = '';
+}
+document.getElementById('popup').addEventListener('click', function(e) {
+  if (e.target === this) closePopup();
+});
+
+// Form → Telegram
+async function submitForm() {
+  const fname    = document.getElementById('fname').value.trim();
+  const phone    = document.getElementById('phone').value.trim();
+  const email    = document.getElementById('email').value.trim();
+  const business = document.getElementById('business').value.trim();
+  const tarif    = document.getElementById('tarif').value;
+  const msg      = document.getElementById('msg').value.trim();
+  const btn      = document.getElementById('submitBtn');
+
+  if (!fname || !phone || !email) {
+    const m = [];
+    if (!fname) m.push('Ism');
+    if (!phone) m.push('Telefon');
+    if (!email) m.push('Email');
+    alert('⚠️ Majburiy maydonlar to\'ldirilmagan: ' + m.join(', '));
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Yuborilmoqda...';
+
+  const TOKEN   = '7873669875:AAGK7waeE95wjZ30rQXtWSJvgTQfAVuI0D8';
+  const CHAT_ID = '8427552828';
+
+  const text = '🎯 Yangi ariza keldi!\n\n'
+    + '👤 Ism: ' + fname + '\n'
+    + '📞 Telefon: ' + phone + '\n'
+    + '📧 Email: ' + email + '\n'
+    + '🏢 Biznes: ' + (business || '—') + '\n'
+    + '💳 Tarif: ' + (tarif || '—') + '\n'
+    + '💬 Izoh: ' + (msg || '—') + '\n'
+    + '📅 Sana: ' + new Date().toLocaleString('uz-UZ');
+
+  try {
+    const res = await fetch('https://api.telegram.org/bot' + TOKEN + '/sendMessage', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: CHAT_ID, text: text })
+    });
+    const json = await res.json();
+
+    if (json.ok) {
+      showPopup(fname);
+      ['fname','phone','email','business','msg'].forEach(function(id) {
+        document.getElementById(id).value = '';
+      });
+      document.getElementById('tarif').value = '';
+    } else {
+      alert('❌ Telegram xatosi: ' + JSON.stringify(json.description));
+    }
+  } catch(err) {
+    alert('❌ Internet xatosi: ' + err.message);
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'Ariza yuborish →';
+}
+</script>
+</body>
+</html>
